@@ -1,21 +1,47 @@
-def euler_tour(root, node_list, index_list, counter):
+import math
+
+def euler_tour(root, node_list, index_list, first_occ, counter):
     node_list.append(root)
     if root.index == None:
         root.index = counter
         counter += 1
+        first_occ.append(len(index_list))
+
     index_list.append(root.index)
     for child in root.children:
-        node_list, index_list, counter = euler_tour(child, node_list, index_list, counter)
+        node_list, index_list, first_occ, counter = euler_tour(child, node_list, index_list, first_occ, counter)
         node_list.append(root)
         index_list.append(root.index)
-    return node_list, index_list, counter
+    return node_list, index_list, first_occ, counter
 
-def LCA(Tree, a, b):
+def seg_tree(arr):
+    segment_tree = [None] * len(arr)
+    segment_tree.extend(arr)
+    for i in range(len(arr) - 1, 1):
+        segment_tree[i] = min((segment_tree[2*i], segment_tree[2*i + 1]))
+
+def rmq(left, right, arr):
+    seg_tree = seg_tree(arr)
+    left += len(arr)
+    right += len(arr)
+    minimum = math.inf
+    while left < right:
+        if left % 2 == 1:
+            minimum = min(minimum, seg_tree(left))
+            left += 1
+        if right % 2 == 1:
+            right -= 1
+            minimum = min(minimum, seg_tree(right))
+        left /= 2
+        right /= 2
+    return minimum
+
+def lca(Tree, a, b):
     node_list = []
     index_list = []
     first_occ = []
 
-    nl, il, _ = euler_tour(self.root, node_list, self.index_list, 0)
+    nl, il, fo, _ = euler_tour(self.root, node_list, index_list, first_occ, 0
 
 class Node(object):
     def __init__(self, name):
@@ -35,8 +61,14 @@ class Node(object):
             self.children.append(children)
 
 class Tree(object):
+
     def __init__(self, root):
         self.root = root
+
+        nl, il, fo, _ = euler_tour(tree.root, [], [], [], 0)
+        self.node_list = nl
+        self.index_list = il
+        self.first_occ = fo
 
 if __name__== "__main__":
      root = Node('A')
@@ -62,5 +94,7 @@ if __name__== "__main__":
      E.add_child([I, J])
 
      tree = Tree(root)
-     print(tree.index_list)
+
      print(tree.node_list)
+     print(index_list)
+     print(first_occ)
