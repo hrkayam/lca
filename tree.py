@@ -1,5 +1,9 @@
 import math
 
+# performing a Euler Tour on an n-nary tree creates an easily traversable respresentation
+# the minumum value of a between two indicies corresponds to the LCA of the respective boundary nodes
+# Visits every edge twice --> 2*|E| = 2*(|V| - 1) --> O(2n) --> O(n) time
+# where n is the number of nodes
 def euler_tour(root, node_list, index_list, first_occ, counter):
     node_list.append(root)
     if root.index == None:
@@ -14,39 +18,38 @@ def euler_tour(root, node_list, index_list, first_occ, counter):
         index_list.append(root.index)
     return node_list, index_list, first_occ, counter
 
+# segment tree represents minima of all power of 2 subarrays in a heap strcuture
+# construction: O(log(n)) time
 def seg_tree(arr):
     segment_tree = [None] * len(arr)
     segment_tree.extend(arr)
-    for i in range(len(arr) - 1, 1):
-        print('HELLO')
-        print(min((segment_tree[2*i], segment_tree[2*i + 1])))
+    for i in range(len(arr) - 1, 0, -1):
         segment_tree[i] = min((segment_tree[2*i], segment_tree[2*i + 1]))
     return segment_tree
 
+#traverses segment tree in O(log(n)) since by theory at each level we visit <=4 nodes
+#and the height of this tree is log(n)
 def rmq(left, right, arr):
-    seg_tree = seg_tree(arr)
+    segment_tree = seg_tree(arr)
     left += len(arr)
     right += len(arr)
     minimum = math.inf
     while left < right:
         if left % 2 == 1:
-            minimum = min(minimum, seg_tree(left))
+            minimum = min(minimum, segment_tree[int(left)])
             left += 1
         if right % 2 == 1:
             right -= 1
-            minimum = min(minimum, seg_tree(right))
+            minimum = min(minimum, segment_tree[int(right)])
         left /= 2
         right /= 2
-    return minimum
+    return int(minimum)
 
-# def lca(Tree, a, b):
-#     node_list = []
-#     index_list = []
-#     first_occ = []
-#
-#     nl, il, fo, _ = euler_tour(self.root, node_list, index_list, first_occ, 0
-#
-#     return 0
+#performs rmq on euler walk tree respresentation to determine the index of and return the LCA
+def lca(tree, a, b):
+
+    min_idx = rmq(tree.first_occ[a.index], tree.first_occ[b.index], tree.index_list)
+    return tree.node_list[tree.first_occ[min_idx]]
 
 class Node(object):
     def __init__(self, name):
@@ -65,6 +68,8 @@ class Node(object):
         else:
             self.children.append(children)
 
+#preprocessing in O(n) time
+#arrays for traversal order, assigned, indices and first occurences of nodes stored as Tree attributes
 class Tree(object):
 
     def __init__(self, root):
@@ -75,6 +80,7 @@ class Tree(object):
         self.index_list = il
         self.first_occ = fo
 
+#to be moved to a seperate testing file
 if __name__== "__main__":
      root = Node('A')
 
@@ -108,3 +114,9 @@ if __name__== "__main__":
      print("SEG TREE TEST")
      arr = [1,5,3,7,3,6,5,7]
      print(seg_tree(arr))
+
+     print("RMQ TEST")
+     print(rmq(4, 8 , arr))
+
+     print("LCA TEST")
+     print(lca(tree, F, H))
