@@ -85,29 +85,3 @@ class Tree(object):
         self.node_list = nl
         self.index_list = il
         self.first_occ = fo
-
-#to be moved to a seperate testing file
-if __name__== "__main__":
-     root = Node('A')
-
-     B = Node('B')
-     C = Node('C')
-
-     D = Node('D')
-     E = Node('E')
-     F = Node('F')
-     G = Node('G')
-
-     H = Node('H')
-     I = Node('I')
-     J = Node('J')
-
-     root.add_child([B, C])
-
-     B.add_child([D, E, F])
-     C.add_child(G)
-
-     D.add_child(H)
-     E.add_child([I, J])
-
-     tree = Tree(root)
