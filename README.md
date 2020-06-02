@@ -3,7 +3,7 @@ Run unit tests in terminal using this command:
 
                                                      python test_lca.py
 
-See test_case_1-4.jpg and test_case_5.jpg for illustrations of the tree strcutres tested.
+See test_case_1-4.jpg and test_case_5.jpg for illustrations of the tree structures tested.
 
 # Correctness and Time Complexity
 
