@@ -33,7 +33,15 @@ def rmq(left, right, arr):
     segment_tree = seg_tree(arr)
     left += len(arr)
     right += len(arr)
+    if left == right:
+        return segment_tree[int(left)]
+    if left > right:
+        temp = right
+        right = left
+        left = temp
     minimum = math.inf
+    print(left)
+    print(right)
     while left < right:
         if left % 2 == 1:
             minimum = min(minimum, segment_tree[int(left)])
@@ -48,6 +56,10 @@ def rmq(left, right, arr):
 #performs rmq on euler walk tree respresentation to determine the index of and return the LCA
 def lca(tree, a, b):
 
+    print("a.index: " + str(a.index))
+    print("b.index: " + str(b.index))
+    print("index_list: ")
+    print(tree.index_list)
     min_idx = rmq(tree.first_occ[a.index], tree.first_occ[b.index], tree.index_list)
     return tree.node_list[tree.first_occ[min_idx]]
 
@@ -106,17 +118,17 @@ if __name__== "__main__":
 
      tree = Tree(root)
 
-     print("EULER TOUR TEST")
-     print(tree.node_list)
-     print(tree.index_list)
-     print(tree.first_occ)
-
-     print("SEG TREE TEST")
-     arr = [1,5,3,7,3,6,5,7]
-     print(seg_tree(arr))
-
-     print("RMQ TEST")
-     print(rmq(4, 8 , arr))
+     # print("EULER TOUR TEST")
+     # print(tree.node_list)
+     # print(tree.index_list)
+     # print(tree.first_occ)
+     #
+     # print("SEG TREE TEST")
+     # arr = [1,5,3,7,3,6,5,7]
+     # print(seg_tree(arr))
+     #
+     # print("RMQ TEST")
+     # print(rmq(4, 8 , arr))
 
      print("LCA TEST")
-     print(lca(tree, F, H))
+     print(lca(tree, I, I))
