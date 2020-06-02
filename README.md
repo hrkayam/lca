@@ -1,4 +1,9 @@
 # Least Common Ancestor (LCA) Implementation for an N-nary Tree
+Run unit tests in terminal using this command:
+
+                                                     python test_lca.py
+
+See test_case_1-4.jpg and test_case_5.jpg for illustration of the tree strcutres tested.
 
 # Correctness and Time Complexity
 
